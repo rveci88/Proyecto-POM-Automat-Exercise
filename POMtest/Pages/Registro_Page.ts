@@ -22,7 +22,7 @@ export class RegisterP{
 
     constructor(page:Page){
         this.pagereg=page;
-        this.Sex=page.locator("//input[@id='id_gender1']");
+        this.Sex=page.getByRole('radio', { name: 'Mr.' });
         this.passwordinput=page.locator("//input[@id='password']");
         this.dayinput=page.locator("//select[@id='days']");
         this.monthinput=page.locator("//select[@id='months']");
