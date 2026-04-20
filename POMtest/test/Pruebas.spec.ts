@@ -20,7 +20,7 @@ test.beforeEach(async({page})=>{
 });
 
 test.describe('Test de Login', async ()=>{
-  test('Login exitoso', async({page})=>{
+  test.only('Login exitoso', async({page})=>{
     await paginaLogin.LoginURL();
     await paginaLogin.signup(userData.name, userData.email);
     await paginaRegistro.registro(userData.password);
