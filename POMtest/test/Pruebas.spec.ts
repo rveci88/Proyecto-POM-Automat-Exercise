@@ -164,4 +164,5 @@ test.describe('Test Flujos de compra', async ()=>{
     const verifimonto= await paginaCart.VerifyShop(precio!, cantidad!);
     expect(montototalentero).toBe(verifimonto);
   });
+  // test('')
 });
