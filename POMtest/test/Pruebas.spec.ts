@@ -61,7 +61,7 @@ test.describe('Test de Login', async ()=>{
 test.describe('Test de Registro', async ()=>{
   test('registro exitoso', async({page})=>{
     await paginaLogin.LoginURL();
-    await paginaLogin.signup(userData.name,userData.email);
+    await paginaLogin.signup(userData.name,'laisi93@gmail.com');
     await paginaRegistro.registro(userData.password);
     await page.getByText('Continue').click();
     await expect(page).toHaveURL('https://automationexercise.com');
@@ -75,14 +75,16 @@ test.describe('Test de Registro', async ()=>{
     await page.pause();
   });
   test('registro con campos obligatorios vacios', async({page})=>{
-    await paginaLogin.LoginURL();
-    await paginaLogin.signup(userData.name, userData.email);
+    await page.goto(userData.loginurl);
+    await paginaLogin.signup(userData.name, 'laisi93@gmail.com');
+    await expect(page).toHaveURL(userData.registrourl);
     await page.getByRole('button', {name:'Create Account'}).click();
     await expect(page).toHaveURL(userData.registrourl);
   });
   test('registro con campos password muy corta', async({page})=>{
-    await paginaLogin.LoginURL();
+    await page.goto(userData.loginurl);
     await paginaLogin.signup('Prueba00', 'prueba00@gmail.com');
+    await expect(page).toHaveURL(userData.registrourl);
     await paginaRegistro.registro('Isi');
     await page.getByText('Continue').click();
     await expect(page).toHaveURL(userData.homeurl);
@@ -114,8 +116,10 @@ test.describe('Test Flujos de compra', async ()=>{
   });
   test('Flujo de compra y pago', async({page})=>{
     await page.goto(userData.loginurl);
-    await paginaLogin.signup(userData.name, userData.email);
+    await paginaLogin.signup(userData.name, 'laisi94@gmail.com');
     await paginaRegistro.registro(userData.password);
+    await page.getByText('Continue').click();
+    await expect(page).toHaveURL(userData.homeurl);
     await page.goto(userData.producturl);
     await paginaProd.Searchproduct(userData.producto);
     await paginaProd.AddCarrito(userData.cantidadproducto);
@@ -131,7 +135,8 @@ test.describe('Test Flujos de compra', async ()=>{
     await page.getByRole('link',{name:'View Cart'}).click();
     await page.getByText('Proceed to Checkout').click();
     await page.getByRole('link', {name:'Register / Login'}).click();
-    await paginaLogin.signup(userData.name, userData.email);
+    await paginaLogin.signup(userData.name, 'laisi95@gmail.com');
+    await expect(page).toHaveURL(userData.registrourl);
     await paginaRegistro.registro(userData.password);
     await page.goto(userData.carturl);
     await paginaCart.FlujoPago();
