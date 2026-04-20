@@ -1,0 +1,45 @@
+ import { Page, Locator} from '@playwright/test'
+
+ //await page.getByRole('link', { name: 'Products' }).click();
+  //await page.getByText('Add to cart').nth(1).click(); //agregar al carrito
+  //await page.getByRole('button', { name: 'Continue Shopping' }).click();
+  //await page.getByRole('link', { name: 'View Cart' }).click(); //ver carrito cuando compras
+  //await page.locator('.cart_quantity_delete').click(); //boton de eliminar
+  //await page.getByRole('link', { name: 'View Product' }).first().click(); //ver producto en el carrito
+  //await page.getByRole('button', { name: 'Add to cart' }).click();
+  //await page.getByText('Proceed To Checkout').click(); //checkear compra
+  //await page.getByRole('button', { name: 'Continue On Cart' }).click(); //continuar comprando
+ 
+  export class ProductPage{
+   
+    readonly page:Page;
+    readonly searchinput:Locator;
+    readonly searchbutton:Locator;
+    readonly viewProductv:Locator;
+    readonly cantidad:Locator;
+    readonly addtocart:Locator;
+
+    constructor(page:Page){
+        this.page=page;
+        this.searchinput=page.getByRole('textbox', { name: 'Search Product' });
+        this.searchbutton=page.locator('#submit_search');
+        this.viewProductv=page.getByRole('link', { name: 'View Product' });
+        this.cantidad=page.locator('#quantity');
+        this.addtocart=page.getByRole('button', { name: 'Add to cart' });
+
+    }
+
+    async Searchproduct(producto:string):Promise<void>{
+        await this.searchinput.fill(producto);
+        await this.searchbutton.click();
+    }
+
+    async AddCarrito(cantidad:string):Promise<void>{
+         await this.viewProductv.click();
+         await this.cantidad.fill(cantidad);
+         await this.addtocart.click();
+    }
+
+    
+ }
+  

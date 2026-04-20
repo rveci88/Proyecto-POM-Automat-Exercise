@@ -1,0 +1,26 @@
+
+
+export const userData = {
+  email: 'laisi92@gmail.com',
+  password: 'Isildur88*',
+  name: 'laisi92',
+  homeurl: 'https://automationexercise.com/',
+  loginurl: 'https://automationexercise.com/login',
+  registrourl: 'https://automationexercise.com/signup',
+  producturl:'https://automationexercise.com/products',
+  carturl:'https://automationexercise.com/view_cart',
+  cantidadproducto:'5',
+  producto: 'Men Tshirt',
+  dayinput: '30',
+  monthinput: '11',
+  yearinput: '1992',
+  firstnameinput: 'Laisi',
+  lastnameinput: 'Fonseca',
+  companyinput: 'Onat',
+  addresinput: 'Camps # 71',
+  countryinput: 'United States',
+  stateinput: 'Florida',
+  cityinpud: 'City',
+  zipcodeinput: '11800',
+  phonenumberinput: '96915121',
+};
