@@ -164,6 +164,15 @@ test.describe('Test Flujos de compra', async ()=>{
     const verifimonto= await paginaCart.VerifyShop(precio!, cantidad!);
     expect(montototalentero).toBe(verifimonto);
   });
-  // test('')
+  test('Agregar al carrito desde marca', async({page})=>{
+    await page.goto(userData.producturl);
+    await page.getByRole('link', { name: '(6) Polo' }).click();
+    await expect(page.getByText('Brand - Polo Products')).toBeVisible();
+    await page.getByRole('link', { name: ' View Product' }).first().click();
+    await page.fill("//input[@id='quantity']", '4');
+    await page.getByRole('button', {name:'Add to cart'}).click();
+    await page.getByRole('link', { name: 'View Cart' }).click();
+    await expect(page).toHaveURL(userData.carturl);
+    await page.locator('.cart_quantity_delete').click();
+  });
 });
-//testasdsadk

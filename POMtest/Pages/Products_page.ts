@@ -18,6 +18,7 @@
     readonly viewProductv:Locator;
     readonly cantidad:Locator;
     readonly addtocart:Locator;
+    readonly marca: Locator;
 
     constructor(page:Page){
         this.page=page;
@@ -26,7 +27,7 @@
         this.viewProductv=page.getByRole('link', { name: 'View Product' });
         this.cantidad=page.locator('#quantity');
         this.addtocart=page.getByRole('button', { name: 'Add to cart' });
-
+        this.marca=page.getByRole('link', { name: '(6) Polo' });
     }
 
     async Searchproduct(producto:string):Promise<void>{
@@ -40,6 +41,5 @@
          await this.addtocart.click();
     }
 
-    
  }
   
