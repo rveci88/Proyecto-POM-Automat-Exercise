@@ -21,32 +21,6 @@ Playwright (TypeScript)
 Node.js
 GitHub Actions para CI/CD
 
-
-Estructura del proyecto
-project-root/
-│
-├── tests/
-│   ├── login.spec.ts
-│   ├── search.spec.ts
-│   ├── cart.spec.ts
-│   ├── checkout.spec.ts
-│
-├── pages/
-│   ├── LoginPage.ts
-│   ├── HomePage.ts
-│   ├── ProductPage.ts
-│   ├── CartPage.ts
-│   ├── CheckoutPage.ts
-│
-├── utils/
-│   ├── test-data.ts
-│   ├── helpers.ts
-│
-├── playwright.config.ts
-├── package.json
-└── README.md
-
-
 Escenarios de prueba
 
 Login
@@ -71,43 +45,6 @@ Confirmación de orden
 Configuración
 
 El proyecto está configurado para ejecutar automáticamente las pruebas en cada push o pull request usando GitHub Actions.
-
-Archivo de workflow
-
-Crear el siguiente archivo:
-
-.github/workflows/playwright.yml
-Configuración del pipeline
-name: Playwright Tests
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout del repositorio
-      uses: actions/checkout@v4
-
-    - name: Configurar Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-
-    - name: Instalar dependencias
-      run: npm install
-
-    - name: Instalar navegadores de Playwright
-      run: npx playwright install --with-deps
-
-    - name: Ejecutar pruebas
-      run: npx playwright test
-
 
 Buenas prácticas implementadas:
 Page Object Model (POM)
