@@ -1,15 +1,5 @@
  import { Page, Locator} from '@playwright/test'
 
- //await page.getByRole('link', { name: 'Products' }).click();
-  //await page.getByText('Add to cart').nth(1).click(); //agregar al carrito
-  //await page.getByRole('button', { name: 'Continue Shopping' }).click();
-  //await page.getByRole('link', { name: 'View Cart' }).click(); //ver carrito cuando compras
-  //await page.locator('.cart_quantity_delete').click(); //boton de eliminar
-  //await page.getByRole('link', { name: 'View Product' }).first().click(); //ver producto en el carrito
-  //await page.getByRole('button', { name: 'Add to cart' }).click();
-  //await page.getByText('Proceed To Checkout').click(); //checkear compra
-  //await page.getByRole('button', { name: 'Continue On Cart' }).click(); //continuar comprando
- 
   export class ProductPage{
    
     readonly page:Page;
