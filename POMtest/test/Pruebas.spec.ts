@@ -1,166 +1,144 @@
-import { test, expect } from '@playwright/test';
-import { RegisterP } from '../Pages/Registro_Page';
-import { LoginPage } from '../Pages/Login_Page';
-import { HomePage } from '../Pages/Home_Page';
+import { test, expect } from '../Fixtures/Fixture';
 import { userData } from '../Data/Users';
-import { ProductPage } from '../Pages/Products_page';
-import { CartPage } from '../Pages/Cart_Page';
-
-let paginaLogin:LoginPage;
-let paginaRegistro:RegisterP;
-let paginaProd:ProductPage;
-let paginaHome:HomePage;
-let paginaCart:CartPage;
-test.beforeEach(async({page})=>{
-  paginaLogin=new LoginPage(page);
-  paginaRegistro=new RegisterP(page);
-  paginaProd=new ProductPage(page);
-  paginaHome=new HomePage(page);
-  paginaCart=new CartPage(page);
-});
 
 test.describe('Test de Login', async ()=>{
-  test('Login exitoso', async({page})=>{
-    await paginaLogin.LoginURL();
-    await paginaLogin.signup(userData.name, userData.email);
-    await paginaRegistro.registro(userData.password);
+  test('Login exitoso', async({page,loginPage,registerPage,homePage})=>{
+    await loginPage.LoginURL();
+    await loginPage.signup(userData.name, userData.email);
+    await registerPage.registro(userData.password);
     await page.getByText('Continue').click();
-    await paginaHome.Logout();
-    await paginaLogin.login(userData.email, userData.password);
+    await homePage.Logout();
+    await loginPage.login(userData.email, userData.password);
     await expect(page).toHaveURL(userData.homeurl);
-    await paginaHome.Deleteacount();
+    await homePage.Deleteacount();
     await page.getByText('Continue').click();
-    await page.pause();
   });
-  test('Login con email incorrect', async ({page})=>{
-    await paginaLogin.LoginURL();
-    await paginaLogin.login('wrongemail@gmail', userData.password);  //correo falta el .com
+  test('Login con email incorrect', async ({page,loginPage})=>{
+    await loginPage.LoginURL();
+    await loginPage.login('wrongemail@gmail', userData.password);  //correo falta el .com
     await expect(page.getByText('Your email or password is incorrect!')).toBeVisible();
   });
-  test('Login con password incorrect', async ({page})=>{
-    await paginaLogin.LoginURL();
-    await paginaLogin.login(userData.email, 'Isildur88');  //password incorrecta
+  test('Login con password incorrect', async ({page,loginPage})=>{
+    await loginPage.LoginURL();
+    await loginPage.login(userData.email, 'Isildur88');  //password incorrecta
     await expect(page.getByText('Your email or password is incorrect!')).toBeVisible();
   });
-  test('Login con email vacio', async ({page})=>{
-    await paginaLogin.LoginURL();
-    await paginaLogin.login('', userData.password);  //correo vacio
+  test('Login con email vacio', async ({page, loginPage})=>{
+    await loginPage.LoginURL();
+    await loginPage.login('', userData.password);  //correo vacio
     await expect(page).toHaveURL(userData.loginurl);
   });
-  test('Login con password vacia', async ({page})=>{
-    await paginaLogin.LoginURL();
-    await paginaLogin.login(userData.email, '');  //password vacio
+  test('Login con password vacia', async ({page, loginPage})=>{
+    await loginPage.LoginURL();
+    await loginPage.login(userData.email, '');  //password vacio
     await expect(page).toHaveURL(userData.loginurl);
   });
-  test('Login con password y correo vacios', async ({page})=>{
-    await paginaLogin.LoginURL();
-    await paginaLogin.login('', '');  //password y email vacio
+  test('Login con password y correo vacios', async ({page, loginPage})=>{
+    await loginPage.LoginURL();
+    await loginPage.login('', '');  //password y email vacio
     await expect(page).toHaveURL(userData.loginurl);
   });
 });
 test.describe('Test de Registro', async ()=>{
-  test('registro exitoso', async({page})=>{
-    await paginaLogin.LoginURL();
-    await paginaLogin.signup(userData.name,'laisi93@gmail.com');
-    await paginaRegistro.registro(userData.password);
+  test('registro exitoso', async({page,loginPage,registerPage,homePage})=>{
+    await loginPage.LoginURL();
+    await loginPage.signup(userData.name,'laisi93@gmail.com');
+    await registerPage.registro(userData.password);
     await page.getByText('Continue').click();
     await expect(page).toHaveURL('https://automationexercise.com');
-    await paginaHome.Deleteacount();
-    await page.pause();
+    await homePage.Deleteacount();
   });
-  test('registro con email existente', async({page})=>{
-    await paginaLogin.LoginURL();
-    await paginaLogin.signup(userData.name, 'pruebaveci@gmail.com');
+  test('registro con email existente', async({page,loginPage})=>{
+    await loginPage.LoginURL();
+    await loginPage.signup(userData.name, 'pruebaveci@gmail.com');
     await expect(page.getByText('Email Address already exist!')).toBeVisible();
-    await page.pause();
   });
-  test('registro con campos obligatorios vacios', async({page})=>{
+  test('registro con campos obligatorios vacios', async({page,loginPage})=>{
     await page.goto(userData.loginurl);
-    await paginaLogin.signup(userData.name, 'laisi93@gmail.com');
+    await loginPage.signup(userData.name, 'laisi93@gmail.com');
     await expect(page).toHaveURL(userData.registrourl);
     await page.getByRole('button', {name:'Create Account'}).click();
     await expect(page).toHaveURL(userData.registrourl);
   });
-  test('registro con campos password muy corta', async({page})=>{
+  test('registro con campos password muy corta', async({page,loginPage,registerPage,homePage})=>{
     await page.goto(userData.loginurl);
-    await paginaLogin.signup('Prueba00', 'prueba00@gmail.com');
+    await loginPage.signup('Prueba00', 'prueba00@gmail.com');
     await expect(page).toHaveURL(userData.registrourl);
-    await paginaRegistro.registro('Isi');
+    await registerPage.registro('Isi');
     await page.getByText('Continue').click();
     await expect(page).toHaveURL(userData.homeurl);
-    await paginaHome.Deleteacount();
+    await homePage.Deleteacount();
   });
 });
 test.describe('Test Flujos de compra', async ()=>{
-  test('Verificar busqueda de producto', async({page})=>{
+  test('Verificar busqueda de producto', async({page, productPage})=>{
      await page.goto(userData.producturl);
-     await paginaProd.Searchproduct('Men Tshirt');
+     await productPage.Searchproduct('Men Tshirt');
      await expect(page.getByText('Men Tshirt').nth(2)).toBeVisible();
   }); 
-  test('Agregar producto al carrito y eliminarlo', async({page})=>{
+  test('Agregar producto al carrito y eliminarlo', async({page, productPage, cartPage})=>{
     await page.goto(userData.producturl);
-    await paginaProd.Searchproduct(userData.producto);
-    await paginaProd.AddCarrito(userData.cantidadproducto);
+    await productPage.Searchproduct(userData.producto);
+    await productPage.AddCarrito(userData.cantidadproducto);
     await page.getByRole('link',{name:'View Cart'}).click();
     await expect(page.locator('tr',{hasText:'Men Tshirt'})).toBeVisible();
-    await paginaCart.Deletecart();
+    await cartPage.Deletecart();
     await expect(page.locator('tr',{hasText:'Men Tshirt'})).not.toBeVisible();
   });
-  test('Verificar cantidad comprada en el carrito', async({page})=>{
+  test('Verificar cantidad comprada en el carrito', async({page, productPage, cartPage})=>{
     await page.goto(userData.producturl);
-    await paginaProd.Searchproduct(userData.producto);
-    await paginaProd.AddCarrito(userData.cantidadproducto);
+    await productPage.Searchproduct(userData.producto);
+    await productPage.AddCarrito(userData.cantidadproducto);
     await page.getByRole('link', {name:'View Cart'}).click();
     await expect(page.locator('tr',{hasText:'Men Tshirt'}).locator('td').nth(3)).toContainText('5');
-    await paginaCart.Deletecart();
+    await cartPage.Deletecart();
   });
-  test('Flujo de compra y pago', async({page})=>{
+  test('Flujo de compra y pago', async({page, loginPage, registerPage, homePage, productPage, cartPage})=>{
     await page.goto(userData.loginurl);
-    await paginaLogin.signup(userData.name, 'laisi94@gmail.com');
-    await paginaRegistro.registro(userData.password);
+    await loginPage.signup(userData.name, 'laisi94@gmail.com');
+    await registerPage.registro(userData.password);
     await page.getByText('Continue').click();
     await expect(page).toHaveURL(userData.homeurl);
     await page.goto(userData.producturl);
-    await paginaProd.Searchproduct(userData.producto);
-    await paginaProd.AddCarrito(userData.cantidadproducto);
+    await productPage.Searchproduct(userData.producto);
+    await productPage.AddCarrito(userData.cantidadproducto);
     await page.getByRole('link', {name:'View Cart'}).click();
-    await paginaCart.FlujoPago();
+    await cartPage.FlujoPago();
     await expect(page).toHaveURL(userData.homeurl);
-    await paginaHome.Deleteacount();
+    await homePage.Deleteacount();
   });
-  test('realizar pedido y loguearse despues',async({page})=>{
+  test('realizar pedido y loguearse despues',async({page, productPage, cartPage, loginPage, registerPage, homePage})=>{
     await page.goto(userData.producturl);
-    await paginaProd.Searchproduct(userData.producto);
-    await paginaProd.AddCarrito(userData.cantidadproducto);
+    await productPage.Searchproduct(userData.producto);
+    await productPage.AddCarrito(userData.cantidadproducto);
     await page.getByRole('link',{name:'View Cart'}).click();
     await page.getByText('Proceed to Checkout').click();
     await page.getByRole('link', {name:'Register / Login'}).click();
-    await paginaLogin.signup('laisi96', 'laisi96@gmail.com');
-    await paginaRegistro.registro(userData.password);
+    await loginPage.signup('laisi96', 'laisi96@gmail.com');
+    await registerPage.registro(userData.password);
     await page.goto(userData.carturl);
-    await paginaCart.FlujoPago();
+    await cartPage.FlujoPago();
     await expect(page).toHaveURL(userData.homeurl);
-    await paginaHome.Deleteacount();
-    await page.pause();
+    await homePage.Deleteacount();
   });
-  test('Eliminar 1 producto del carrito', async({page})=>{
+  test('Eliminar 1 producto del carrito', async({page, productPage, cartPage})=>{
     await page.goto(userData.producturl);
-    await paginaProd.Searchproduct(userData.producto);
-    await paginaProd.AddCarrito(userData.cantidadproducto);
+    await productPage.Searchproduct(userData.producto);
+    await productPage.AddCarrito(userData.cantidadproducto);
     await page.getByRole('link',{name:'View Cart'}).click();
-    await paginaCart.Deletecart();
+    await cartPage.Deletecart();
     await expect(page.locator('tr',{hasText:userData.producto})).not.toBeVisible();
   });
-  test('Verificar monto de la compra', async({page})=>{
+  test('Verificar monto de la compra', async({page, productPage, cartPage})=>{
     await page.goto(userData.producturl);
-    await paginaProd.Searchproduct('Blue Top');
-    await paginaProd.AddCarrito('7');
+    await productPage.Searchproduct('Blue Top');
+    await productPage.AddCarrito('7');
     await page.getByRole('link',{name:'View Cart'}).click();
     const precio=await page.locator('tr',{hasText:'Blue Top'}).locator('td').nth(2).textContent();
     const cantidad=await page.locator('tr',{hasText:'Blue Top'}).locator('td').nth(3).textContent();
     const montototal=await page.locator('tr',{hasText:'Blue Top'}).locator('td').nth(4).textContent();
     const montototalentero=parseInt(montototal!.replace(/\D/g,''));
-    const verifimonto= await paginaCart.VerifyShop(precio!, cantidad!);
+    const verifimonto= await cartPage.VerifyShop(precio!, cantidad!);
     expect(montototalentero).toBe(verifimonto);
   });
   test('Agregar al carrito desde marca', async({page})=>{
