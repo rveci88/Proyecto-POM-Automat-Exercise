@@ -1,5 +1,5 @@
 export const userData = {
-  email: 'laisi92@gmail.com',
+  email: `laisi${Math.floor(100 + Math.random() * 900)}@gmail.com`,
   password: 'Isildur88*',
   name: 'laisi92',
   homeurl: 'https://automationexercise.com/',
