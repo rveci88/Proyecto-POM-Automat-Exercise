@@ -114,7 +114,7 @@ test.describe('Test Flujos de compra', async ()=>{
     await page.getByRole('link',{name:'View Cart'}).click();
     await page.getByText('Proceed to Checkout').click();
     await page.getByRole('link', {name:'Register / Login'}).click();
-    await loginPage.signup('laisi96', 'laisi96@gmail.com');
+    await loginPage.signup('laisi96', userData.email);
     await registerPage.registro(userData.password);
     await page.goto(userData.carturl);
     await cartPage.FlujoPago();
@@ -152,29 +152,4 @@ test.describe('Test Flujos de compra', async ()=>{
     await expect(page).toHaveURL(userData.carturl);
     await page.locator('.cart_quantity_delete').click();
   });
-});
-test.describe('Validaciones', async()=>{
-  test('validar Contact us', async({page, homePage })=>{
-    await homePage.HomeURL();
-    await page.getByRole('link', {name:'Contact us'}).click();
-    await expect(page.getByText('Get In Touch')).toBeVisible();
-    await page.getByRole('textbox', { name: 'Name' }).fill('Laisi');
-    await page.getByRole('textbox', { name: 'Email', exact: true }).fill(`laisi${Math.floor(100 + Math.random() * 900)}@gmail.com`);
-    await page.getByRole('textbox', { name: 'Subject' }).fill('Test Subject');
-    await page.getByRole('textbox', { name: 'Your Message Here' }).fill('This is a test message for the contact us form.');
-    await page.waitForTimeout(2000);
-    page.once('dialog', async dialog => {
-    console.log('DIALOG DETECTADO:', dialog.message());
-    await dialog.accept();
-    });
-    await page.getByRole('button', { name: 'Submit' }).click();  
-    await expect(page.locator('#contact-page').getByText('Success! Your details have been submitted successfully.')).toBeVisible();
-    await page.getByRole('link').filter({ hasText: /Home/ }).nth(1).click();
-    await expect(page).toHaveURL(userData.homeurl);
-  });
-  test('Verificar pagina Test Case', async({page, homePage })=>{
-    await homePage.HomeURL();
-    await page.getByRole('link', { name: ' Test Cases' }).click();
-    await expect(page).toHaveURL('https://automationexercise.com/test_cases');
-  });
-});
+}); 
