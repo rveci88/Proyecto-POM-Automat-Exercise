@@ -172,4 +172,9 @@ test.describe('Validaciones', async()=>{
     await page.getByRole('link').filter({ hasText: /Home/ }).nth(1).click();
     await expect(page).toHaveURL(userData.homeurl);
   });
+  test('Verificar pagina Test Case', async({page, homePage })=>{
+    await homePage.HomeURL();
+    await page.getByRole('link', { name: ' Test Cases' }).click();
+    await expect(page).toHaveURL('https://automationexercise.com/test_cases');
+  });
 });
