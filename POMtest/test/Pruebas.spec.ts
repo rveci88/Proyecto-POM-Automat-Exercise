@@ -1,7 +1,7 @@
 import { test, expect } from '../Fixtures/Fixture';
 import { userData } from '../Data/Users';
 
-test.describe('Test de Login', async ()=>{
+test.describe('Test de Login', ()=>{
   test('Login exitoso', async({page,loginPage,registerPage,homePage})=>{
     await loginPage.LoginURL();
     await loginPage.signup(userData.name, userData.email);
@@ -39,7 +39,7 @@ test.describe('Test de Login', async ()=>{
     await expect(page).toHaveURL(userData.loginurl);
   });
 });
-test.describe('Test de Registro', async ()=>{
+test.describe('Test de Registro', ()=>{
   test('registro exitoso', async({page,loginPage,registerPage,homePage})=>{
     await loginPage.LoginURL();
     await loginPage.signup(userData.name,'laisi93@gmail.com');
@@ -70,7 +70,7 @@ test.describe('Test de Registro', async ()=>{
     await homePage.Deleteacount();
   });
 });
-test.describe('Test Flujos de compra', async ()=>{
+test.describe('Test Flujos de compra', ()=>{
   test('Verificar busqueda de producto', async({page, productPage})=>{
      await page.goto(userData.producturl);
      await productPage.Searchproduct('Men Tshirt');

@@ -1,5 +1,5 @@
-import { Page, Locator, expect} from '@playwright/test'
-import { userData } from '../Data/Users';
+import { Page, Locator } from '@playwright/test'
+import { userData } from '../Data/Users'
 
 export class CartPage{
     

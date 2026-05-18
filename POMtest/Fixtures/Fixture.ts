@@ -1,9 +1,9 @@
-import { test as base, expect } from '@playwright/test';
-import { LoginPage } from '../Pages/Login_Page';
-import { CartPage } from '../Pages/Cart_Page';
-import { HomePage } from '../Pages/Home_Page';
-import { RegisterP } from '../Pages/Registro_Page';
-import { ProductPage } from '../Pages/Products_Page';
+import { test as base, expect } from '@playwright/test'
+import { LoginPage } from '../Pages/Login_Page'
+import { CartPage } from '../Pages/Cart_Page'
+import { HomePage } from '../Pages/Home_Page'
+import { RegisterP } from '../Pages/Registro_Page'
+import { ProductPage } from '../Pages/Products_Page'
 
 
 type MyFixtures = {
