@@ -26,8 +26,8 @@ jobs:
       - name: Instalar navegadores
         run: npx playwright install chromium --with-deps
 
-      - name: Ejecutar tests
-        run: npx playwright test
+      - name: Run Playwright tests in QA
+        run: npm run test:qa
         
       - name: Upload Playwright report
         if: always()
