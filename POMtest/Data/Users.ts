@@ -1,7 +1,7 @@
 export const userData = {
-  email: `laisi${Math.floor(100 + Math.random() * 900)}@gmail.com`,
+  email: `user${Math.floor(100 + Math.random() * 900)}@gmail.com`,
   password: 'Isildur88*',
-  name: 'laisi92',
+  name: 'user',
   homeurl: 'https://automationexercise.com/',
   loginurl: 'https://automationexercise.com/login',
   registrourl: 'https://automationexercise.com/signup',
@@ -21,4 +21,5 @@ export const userData = {
   cityinpud: 'City',
   zipcodeinput: '11800',
   phonenumberinput: '96915121',
+  enpointAllProduct:'https://automationexercise.com/api/productsList',
 };

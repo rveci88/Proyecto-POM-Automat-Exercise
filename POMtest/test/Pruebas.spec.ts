@@ -1,5 +1,6 @@
 import { test, expect } from '../Fixtures/Fixture';
 import { userData } from '../Data/Users';
+import { HomePage } from '../Pages/Home_Page';
 
 test.describe('Test de Login', ()=>{
   test('Login exitoso', async({page,loginPage,registerPage,homePage})=>{
@@ -152,4 +153,78 @@ test.describe('Test Flujos de compra', ()=>{
     await expect(page).toHaveURL(userData.carturl);
     await page.locator('.cart_quantity_delete').click();
   });
+  test('Verificar carrito luego de loguearse', async ({page,homePage, registerPage,loginPage, productPage, cartPage})=>{
+    await page.goto(userData.homeurl)
+    await page.goto(userData.producturl)
+    await productPage.Searchproduct(userData.producto)
+    await productPage.AddCarrito('10')
+    await page.goto(userData.loginurl)
+    await loginPage.signup(userData.name, userData.email)
+    await registerPage.registro(userData.password)
+    await page.goto(userData.carturl)
+    await expect(await cartPage.VerifyCant(userData.producto)).toBe(10)
+    await page.goto(userData.homeurl)
+    await homePage.Deleteacount()
+    await expect(page.getByText('Account Deleted!')).toBeVisible()
+  })
 }); 
+test.describe('API testing', ()=>{
+  test('Get all product list', async ({request})=>{
+      const response=await request.get('https://automationexercise.com/api/productsList')
+      expect(response.status()).toBe(200)
+      const body=await response.json()
+      console.log(body)
+  })
+  test('POST To All Products List', async ({request})=>{
+      const response= await request.post('https://automationexercise.com/api/productsList', {
+        data:{
+          id:30,
+          name: 'Red short',
+          price: 'Rs. 300',
+          brand: 'Polo',
+          category: {
+            usertype:{
+              usertype:'Woman'
+            },
+            category:'Tops'
+          }
+        }
+      })
+      const body=await response.json()
+      expect(body.responseCode).toBe(405)
+      console.log('La api responde status code 200 y el body dice que es status code 405 Method not allowed')
+      console.log(body)
+    })
+  test('Get All Brands List', async ({request})=>{
+    const response=await request.get('https://automationexercise.com/api/brandsList')
+    const body=await response.json()
+    expect(response.status()).toBe(200)
+    console.log('la respuesta del servisor es statuscode '+ response.status())
+    console.log(body)
+  })  
+  test('POST To Search Product', async ({request})=>{
+    const response=await request.post('https://automationexercise.com/api/searchProduct',{form:{
+      search_product:'Men Tshirt'
+    }})
+    const body=await response.json()
+    expect(response.status()).toBe(200)
+    console.log('La respuesta del server es: '+response.status())
+    console.log(body)
+  })
+  test('POST To Search Product without search_product parameter', async ({request})=>{
+    const response=await request.post('https://automationexercise.com/api/searchProduct',{form:{}})
+    const body=await response.json()
+    expect(body.responseCode).toBe(400)
+    console.log('La respuesta del server es: '+response.status()+' pero la respuesta del body es: '+body.responseCode)
+    console.log(body)
+  })
+  test('POST To Verify Login with valid details', async({request})=>{
+    const response=await request.post('https://automationexercise.com/api/verifyLogin', {form:{
+    email:'rveci@gmail.com',
+    password: userData.password
+  }})
+  const body=await response.json()
+  expect(response.status()).toBe(200)
+  console.log(body)
+ })
+})

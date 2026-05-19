@@ -56,4 +56,14 @@ export class CartPage{
       const cantidadInt=parseInt(cantidad);
       return precioInt*cantidadInt;
     }
+
+    async VerifyCant(producto:string){
+      const tabla=await this.pageCart.locator('tr',{hasText:producto}).locator('td').nth(3).textContent()
+      if(tabla){
+      const cantidad=parseInt(tabla)
+      return cantidad
+      }else{
+        return 10000
+      }
+    }
 }
