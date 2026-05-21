@@ -148,8 +148,8 @@ test.describe('API testing', ()=>{
   test('Get all product list', async ({request})=>{
       const response=await request.get('https://automationexercise.com/api/productsList')
       expect(response.status()).toBe(200)
-      const body=await response.json()
-      console.log(body)
+      // const body=await response.json()
+      // console.log(body)
   })
   test('POST To All Products List', async ({request})=>{
       const response= await request.post('https://automationexercise.com/api/productsList', {
@@ -168,39 +168,39 @@ test.describe('API testing', ()=>{
       })
       const body=await response.json()
       expect(body.responseCode).toBe(405)
-      console.log('La api responde status code 200 y el body dice que es status code 405 Method not allowed')
-      console.log(body)
+      // console.log('La api responde status code 200 y el body dice que es status code 405 Method not allowed')
+      // console.log(body)
     })
   test('Get All Brands List', async ({request})=>{
     const response=await request.get('https://automationexercise.com/api/brandsList')
-    const body=await response.json()
+    // const body=await response.json()
     expect(response.status()).toBe(200)
-    console.log('la respuesta del servisor es statuscode '+ response.status())
-    console.log(body)
+    // console.log('la respuesta del servisor es statuscode '+ response.status())
+    // console.log(body)
   })  
   test('POST To Search Product', async ({request})=>{
     const response=await request.post('https://automationexercise.com/api/searchProduct',{form:{
       search_product:'Men Tshirt'
     }})
-    const body=await response.json()
+    // const body=await response.json()
     expect(response.status()).toBe(200)
-    console.log('La respuesta del server es: '+response.status())
-    console.log(body)
+    // console.log('La respuesta del server es: '+response.status())
+    // console.log(body)
   })
   test('POST To Search Product without search_product parameter', async ({request})=>{
     const response=await request.post('https://automationexercise.com/api/searchProduct',{form:{}})
     const body=await response.json()
     expect(body.responseCode).toBe(400)
-    console.log('La respuesta del server es: '+response.status()+' pero la respuesta del body es: '+body.responseCode)
-    console.log(body)
+    // console.log('La respuesta del server es: '+response.status()+' pero la respuesta del body es: '+body.responseCode)
+    // console.log(body)
   })
   test('POST To Verify Login with valid details', async({request})=>{
     const response=await request.post('https://automationexercise.com/api/verifyLogin', {form:{
     email:'rveci@gmail.com',
     password: userData.password
   }})
-  const body=await response.json()
+  // const body=await response.json()
   expect(response.status()).toBe(200)
-  console.log(body)
+  // console.log(body)
  })
 })
