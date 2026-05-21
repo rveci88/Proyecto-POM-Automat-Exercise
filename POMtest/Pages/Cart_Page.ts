@@ -51,10 +51,15 @@ export class CartPage{
        await this.continuebutton.click();
     }
 
-    async VerifyShop(precio: string , cantidad: string):Promise<number>{
-      const precioInt=parseInt(precio.replace(/\D/g,''));
-      const cantidadInt=parseInt(cantidad);
-      return precioInt*cantidadInt;
+    async VerifyShop():Promise<boolean>{
+      const precio = parseInt(((await this.pageCart.locator('tr', { hasText: userData.producto }).locator('td').nth(2).textContent()) || '').replace(/\D/g, ''))
+      const cantidad = parseInt(((await this.pageCart.locator('tr', { hasText: userData.producto }).locator('td').nth(3).textContent()) || '').replace(/\D/g, ''))
+      const montototal = parseInt(((await this.pageCart.locator('tr', { hasText: userData.producto }).locator('td').nth(4).textContent()) || '').replace(/\D/g, ''))
+      if(precio*cantidad===montototal){
+        return true
+      }else{
+        return false
+      }
     }
 
     async VerifyCant(producto:string){
@@ -65,5 +70,9 @@ export class CartPage{
       }else{
         return 10000
       }
+    }
+
+    async navcartURL():Promise<void>{
+      await this.pageCart.goto(userData.carturl);
     }
 }

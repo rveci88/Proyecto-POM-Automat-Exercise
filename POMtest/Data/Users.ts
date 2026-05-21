@@ -1,4 +1,5 @@
 export const userData = {
+  emailtest: 'retest100@gmail.com',
   email: `user${Math.floor(100 + Math.random() * 900)}@gmail.com`,
   password: 'Isildur88*',
   name: 'user',
