@@ -31,7 +31,7 @@ export class LoginPage{
         await this.signupbutton.click();
     }
 
-    async LoginURL():Promise<void>{
+    async navURL():Promise<void>{
         await this.pageLog.goto('https://automationexercise.com/login');
     }
 

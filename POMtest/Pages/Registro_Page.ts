@@ -55,6 +55,7 @@ export class RegisterP{
         await this.zipcodeinput.fill(userData.zipcodeinput);
         await this.phonenumberinput.fill(userData.phonenumberinput);
         await this.createbutton.click();
+        await this.pagereg.getByText('Continue').click();
     }
         
 }

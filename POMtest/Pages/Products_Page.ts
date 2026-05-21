@@ -1,4 +1,5 @@
- import { Page, Locator} from '@playwright/test'
+import { Page, Locator} from '@playwright/test'
+import { userData } from '../Data/Users';
 
   export class ProductPage{
    
@@ -26,9 +27,14 @@
     }
 
     async AddCarrito(cantidad:string):Promise<void>{
-         await this.viewProductv.click();
+         await this.viewProductv.first().click();
          await this.cantidad.fill(cantidad);
          await this.addtocart.click();
+         await this.page.getByRole('link',{name:'View Cart'}).click();
+    }
+
+    async navproductURL():Promise<void>{
+        await this.page.goto(userData.producturl);
     }
 
  }

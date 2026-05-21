@@ -17,7 +17,7 @@ export class HomePage{
         await this.deleteLink.click();
    }
 
-    async HomeURL(){
+    async navHomeURL(){
         await this.pageHome.goto('https://automationexercise.com');
     }
 
