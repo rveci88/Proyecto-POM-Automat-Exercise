@@ -28,6 +28,8 @@ jobs:
 
       - name: Run Playwright tests in QA
         run: npm run test:qa
+        env:
+          BASE_URL:  ${{ secrets.BASE_URL }}
         
       - name: Upload Playwright report
         if: always()
