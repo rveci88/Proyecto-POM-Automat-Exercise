@@ -45,8 +45,8 @@ test('Actualizar toda reserva',async({bookingService})=>{
 })
 
 test('Actualizar parcialmente reserva',async({bookingService})=>{
-    const firstname=ApiData.firstname()
-    const lastname=ApiData.lastname()
+    const firstname=await ApiData.firstname()
+    const lastname=await ApiData.lastname()
     const response2= await bookingService.CreateBookin()
     const body2=await response2.json()
     const response3=await bookingService.partialUpdateBooking(body2.bookingid, firstname, lastname)
