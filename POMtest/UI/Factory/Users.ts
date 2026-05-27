@@ -1,6 +1,7 @@
 export class UserFactory {
-  static createData() {
-    const { Faker, es } = require('@faker-js/faker');
+  // Convertimos el método en asíncrono para cargar Faker dinámicamente en memoria
+  static async createData() {
+    const { Faker, es } = await import('@faker-js/faker');
     const faker = new Faker({ locale: [es] });
 
     return {
