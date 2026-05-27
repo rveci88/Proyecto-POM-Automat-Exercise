@@ -43,10 +43,10 @@ test.describe('Test de Login', ()=>{
 test.describe('Test de Registro', ()=>{
   test('registro exitoso', async({page,loginPage,navigate, registerPage})=>{
     const userData=await UserFactory.createData()
-    await loginPage.navURL();
-    await loginPage.signup(userData.username, userData.email);
-    await registerPage.registro(userData.password);
-    await expect(page).toHaveURL(URLs.homeurl);
+    await loginPage.navURL()
+    await loginPage.signup(userData.username, userData.email)
+    await registerPage.registro(userData.password)
+    await expect(page).toHaveURL(URLs.homeurl)
     await navigate.NavDeleteAcount()
   });
   test('registro con email existente', async({page,loginPage})=>{
