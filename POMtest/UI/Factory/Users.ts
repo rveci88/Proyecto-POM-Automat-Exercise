@@ -1,7 +1,5 @@
 export class UserFactory {
   static createData() {
-    // 👈 TRUCO MAESTRO: Forzamos el require dinámico dentro del método.
-    // Esto evita que Node.js analice Faker al arrancar el framework en el CI/CD.
     const { Faker, es } = require('@faker-js/faker');
     const faker = new Faker({ locale: [es] });
 
