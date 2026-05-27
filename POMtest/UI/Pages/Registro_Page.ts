@@ -40,7 +40,7 @@ export class RegisterP{
     }
 
     async registro(password:string):Promise<void>{
-        const userData=UserFactory.createData()
+        const userData=await UserFactory.createData()
         await this.Sex.check();
         await this.passwordinput.fill(password)
         await this.dayinput.selectOption(userData.birthDay)
