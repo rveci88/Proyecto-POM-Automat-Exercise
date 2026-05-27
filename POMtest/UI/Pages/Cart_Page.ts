@@ -32,9 +32,9 @@ export class CartPage{
       this.yearExp=page.getByRole('textbox', { name: 'YYYY' })
       this.payButton=page.getByRole('button', { name: 'Pay and Confirm Order' })
       this.continuebutton=page.getByRole('link', { name: 'Continue' })
-      this.price=page.locator('tr',{hasText:UserFactory.createData().producto[0]}).locator('td').nth(2);
-      this.quantity=page.locator('tr',{hasText:UserFactory.createData().producto[0]}).locator('td').nth(3);
-      this.totalprice=page.locator('tr',{hasText:UserFactory.createData().producto[0]}).locator('td').nth(4);
+      this.price=page.locator('tr',{hasText:'Men Tshirt'}).locator('td').nth(2);
+      this.quantity=page.locator('tr',{hasText:'Men Tshirt'}).locator('td').nth(3);
+      this.totalprice=page.locator('tr',{hasText:'Men Tshirt'}).locator('td').nth(4);
       this.proceedbutton=page.getByText('Proceed To Checkout')
       this.registerbutton=page.getByRole('link', { name: 'Register / Login' })
     }
@@ -56,9 +56,9 @@ export class CartPage{
     }
 
     async VerifyShop():Promise<boolean>{
-      const precio = parseInt(((await this.pageCart.locator('tr', { hasText: UserFactory.createData().producto[0] }).locator('td').nth(2).textContent()) || '').replace(/\D/g, ''))
-      const cantidad = parseInt(((await this.pageCart.locator('tr', { hasText: UserFactory.createData().producto[0] }).locator('td').nth(3).textContent()) || '').replace(/\D/g, ''))
-      const montototal = parseInt(((await this.pageCart.locator('tr', { hasText: UserFactory.createData().producto[0] }).locator('td').nth(4).textContent()) || '').replace(/\D/g, ''))
+      const precio = parseInt(((await this.pageCart.locator('tr', { hasText: 'Men Tshirt' }).locator('td').nth(2).textContent()) || '').replace(/\D/g, ''))
+      const cantidad = parseInt(((await this.pageCart.locator('tr', { hasText: 'Men Tshirt' }).locator('td').nth(3).textContent()) || '').replace(/\D/g, ''))
+      const montototal = parseInt(((await this.pageCart.locator('tr', { hasText: 'Men Tshirt' }).locator('td').nth(4).textContent()) || '').replace(/\D/g, ''))
       if(precio*cantidad===montototal){
         return true
       }else{
