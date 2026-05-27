@@ -1,5 +1,5 @@
 import { Page, Locator } from '@playwright/test'
-import { userData } from '../Data/Users'
+import { UserFactory, URLs } from '../Factory/Users'
 
 export class CartPage{
     
@@ -17,6 +17,8 @@ export class CartPage{
     readonly price:Locator;
     readonly quantity:Locator;
     readonly totalprice: Locator;
+    readonly proceedbutton: Locator
+    readonly registerbutton: Locator
 
     constructor(page:Page){
       this.pageCart=page;
@@ -30,9 +32,11 @@ export class CartPage{
       this.yearExp=page.getByRole('textbox', { name: 'YYYY' })
       this.payButton=page.getByRole('button', { name: 'Pay and Confirm Order' })
       this.continuebutton=page.getByRole('link', { name: 'Continue' })
-      this.price=page.locator('tr',{hasText:userData.producto}).locator('td').nth(2);
-      this.quantity=page.locator('tr',{hasText:userData.producto}).locator('td').nth(3);
-      this.totalprice=page.locator('tr',{hasText:userData.producto}).locator('td').nth(4);
+      this.price=page.locator('tr',{hasText:UserFactory.createData().producto[0]}).locator('td').nth(2);
+      this.quantity=page.locator('tr',{hasText:UserFactory.createData().producto[0]}).locator('td').nth(3);
+      this.totalprice=page.locator('tr',{hasText:UserFactory.createData().producto[0]}).locator('td').nth(4);
+      this.proceedbutton=page.getByText('Proceed To Checkout')
+      this.registerbutton=page.getByRole('link', { name: 'Register / Login' })
     }
  
     async Deletecart():Promise<void>{
@@ -52,9 +56,9 @@ export class CartPage{
     }
 
     async VerifyShop():Promise<boolean>{
-      const precio = parseInt(((await this.pageCart.locator('tr', { hasText: userData.producto }).locator('td').nth(2).textContent()) || '').replace(/\D/g, ''))
-      const cantidad = parseInt(((await this.pageCart.locator('tr', { hasText: userData.producto }).locator('td').nth(3).textContent()) || '').replace(/\D/g, ''))
-      const montototal = parseInt(((await this.pageCart.locator('tr', { hasText: userData.producto }).locator('td').nth(4).textContent()) || '').replace(/\D/g, ''))
+      const precio = parseInt(((await this.pageCart.locator('tr', { hasText: UserFactory.createData().producto[0] }).locator('td').nth(2).textContent()) || '').replace(/\D/g, ''))
+      const cantidad = parseInt(((await this.pageCart.locator('tr', { hasText: UserFactory.createData().producto[0] }).locator('td').nth(3).textContent()) || '').replace(/\D/g, ''))
+      const montototal = parseInt(((await this.pageCart.locator('tr', { hasText: UserFactory.createData().producto[0] }).locator('td').nth(4).textContent()) || '').replace(/\D/g, ''))
       if(precio*cantidad===montototal){
         return true
       }else{
@@ -73,6 +77,11 @@ export class CartPage{
     }
 
     async navcartURL():Promise<void>{
-      await this.pageCart.goto(userData.carturl);
+      await this.pageCart.goto(URLs.carturl);
+    }
+
+    async proceedCheck():Promise<void>{
+      await this.proceedbutton.click()
+      await this.registerbutton.click()
     }
 }

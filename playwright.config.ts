@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import { defineConfig, devices } from '@playwright/test';
-import path from 'node:path';
+// import path from 'node:path';
 
 /**
  * Read environment variables from file.
@@ -8,7 +8,7 @@ import path from 'node:path';
  */
 require('dotenv').config(
   {
-    path: `.env${process.env.NODE_ENV}`
+    path: `.env${process.env.NODE_ENV || ''}`
   }
 )
 
@@ -22,7 +22,7 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 2 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */

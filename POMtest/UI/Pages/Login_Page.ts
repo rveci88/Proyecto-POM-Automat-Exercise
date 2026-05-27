@@ -1,7 +1,8 @@
 import { Page, Locator } from '@playwright/test';
+import { UserFactory, URLs } from '../Factory/Users';
 
 export class LoginPage{
-    readonly pageLog: Page;
+    readonly page: Page;
     readonly emailinput: Locator;
     readonly passwordinput: Locator;
     readonly loginbutton: Locator;
@@ -10,7 +11,7 @@ export class LoginPage{
     readonly signupbutton: Locator;
 
     constructor (page:Page){
-        this.pageLog=page;
+        this.page=page;
         this.emailinput=page.locator('form').filter({ hasText: 'Login' }).getByPlaceholder('Email Address');
         this.passwordinput=page.locator("//input[@name='password']");
         this.loginbutton=page.locator("//*[@data-qa='login-button']"); 
@@ -32,7 +33,7 @@ export class LoginPage{
     }
 
     async navURL():Promise<void>{
-        await this.pageLog.goto('https://automationexercise.com/login');
+        await this.page.goto(URLs.loginurl);
     }
 
 }

@@ -1,5 +1,5 @@
 import { Page, Locator} from '@playwright/test'
-import { userData } from '../Data/Users';
+import { UserFactory, URLs } from '../Factory/Users';
 
   export class ProductPage{
    
@@ -34,7 +34,7 @@ import { userData } from '../Data/Users';
     }
 
     async navproductURL():Promise<void>{
-        await this.page.goto(userData.producturl);
+        await this.page.goto(URLs.producturl);
     }
 
  }
