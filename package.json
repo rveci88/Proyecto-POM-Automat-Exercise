@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:qa": "cross-env NODE_ENV=.qa npx playwright test",
-    "test:staging": "cross-env NODE_ENV=.staging npx playwright test"
+    "test:qa": "cross-env NODE_ENV=.qa NODE_OPTIONS='--experimental-vm-modules' npx playwright test",
+    "test:staging": "cross-env NODE_ENV=.staging NODE_OPTIONS='--experimental-vm-modules' npx playwright test"
   },
   "keywords": [],
   "author": "",
