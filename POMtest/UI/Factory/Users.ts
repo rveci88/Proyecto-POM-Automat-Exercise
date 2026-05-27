@@ -1,9 +1,10 @@
-const { Faker, es } = require('@faker-js/faker');
-
-const faker = new Faker({ locale: [es] });
-
 export class UserFactory {
   static createData() {
+    // 👈 TRUCO MAESTRO: Forzamos el require dinámico dentro del método.
+    // Esto evita que Node.js analice Faker al arrancar el framework en el CI/CD.
+    const { Faker, es } = require('@faker-js/faker');
+    const faker = new Faker({ locale: [es] });
+
     return {
       emailtest: 'retest100@gmail.com',
       passwordtest: 'Isildur88*',
@@ -39,4 +40,3 @@ export const URLs = {
   endpointSearch: 'https://automationexercise.com/api/searchProduct',
   endpointVerifyLogin: 'https://automationexercise.com/api/verifyLogin',
 };
-
