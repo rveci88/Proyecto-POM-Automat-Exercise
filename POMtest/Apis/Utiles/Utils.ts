@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker/locale/es'
+const { faker } = require('@faker-js/faker/locale/es');
 
 export const ApiData={
     username:"admin",
