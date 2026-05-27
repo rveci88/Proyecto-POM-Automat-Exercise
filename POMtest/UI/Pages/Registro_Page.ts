@@ -1,5 +1,5 @@
 import { Page, Locator } from '@playwright/test';
-import { userData } from '../Data/Users';
+import { UserFactory } from '../Factory/Users';
 
 export class RegisterP{
     
@@ -40,22 +40,27 @@ export class RegisterP{
     }
 
     async registro(password:string):Promise<void>{
+        const userData=UserFactory.createData()
         await this.Sex.check();
-        await this.passwordinput.fill(password);
-        await this.dayinput.selectOption(userData.dayinput);
-        await this.monthinput.selectOption(userData.monthinput);
-        await this.yearinput.selectOption(userData.yearinput);
-        await this.firstnameinput.fill(userData.firstnameinput);
-        await this.lastnameinput.fill(userData.lastnameinput);
-        await this.companyinput.fill(userData.companyinput);
-        await this.addresinput.fill(userData.addresinput);
-        await this.countryinput.selectOption(userData.countryinput);
-        await this.stateinput.fill(userData.stateinput);
-        await this.cityinpud.fill(userData.cityinpud);
-        await this.zipcodeinput.fill(userData.zipcodeinput);
-        await this.phonenumberinput.fill(userData.phonenumberinput);
+        await this.passwordinput.fill(password)
+        await this.dayinput.selectOption(userData.birthDay)
+        await this.monthinput.selectOption(userData.birthMonth);
+        await this.yearinput.selectOption(userData.birthYear);
+        await this.firstnameinput.fill(userData.firstName);
+        await this.lastnameinput.fill(userData.lastName);
+        await this.companyinput.fill(userData.company);
+        await this.addresinput.fill(userData.address);
+        await this.countryinput.selectOption('United States');
+        await this.stateinput.fill(userData.state);
+        await this.cityinpud.fill(userData.city);
+        await this.zipcodeinput.fill(userData.zipCode);
+        await this.phonenumberinput.fill(userData.phoneNumber);
         await this.createbutton.click();
         await this.pagereg.getByText('Continue').click();
+    }
+
+    async ejecutarRegistro():Promise<void>{
+        await this.createbutton.click()
     }
         
 }
